@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ninja', ['ngRoute', 'ngResource', 'ninja.services', 'ninja.controllers']);
+var app = angular.module('ninja', ['ngRoute', 'ngResource', 'ngAnimate', 'ninja.services', 'ninja.controllers', 'toastr']);
 
 app.constant('API', 'api.php');
 

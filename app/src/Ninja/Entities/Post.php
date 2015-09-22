@@ -64,7 +64,7 @@ class Post
 
     public function getDate()
     {
-        return $this->date;
+        return $this->date->format('d/m/Y');
     }
 
     public function getContent()

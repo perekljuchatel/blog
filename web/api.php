@@ -30,7 +30,12 @@ $app->get('/posts', function () use ($app) {
     $hydrator = new DoctrineHydrator($em);
     $results = $em->getRepository('Ninja\Entities\Post')->findAll();
 
-    return $app->json($hydrator->extract($results));
+    $data = [];
+    foreach ($results as $r) {
+        $data[] = $hydrator->extract($r);
+    }
+
+    return $app->json($data);
 });
 $app->post('/posts', function (Request $request) use ($app) {
 
