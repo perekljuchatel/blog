@@ -1,0 +1,19 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Data</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="post in posts">
+            <td>{{ post.title }}</td>
+            <td>{{ post.date | toDate }}</td>
+            <td><a href="" class="btn btn-default btn-xs">Editar</a></td>
+            <td><a class="btn btn-default btn-xs">Excluir</a></td>
+        </tr>
+    </tbody>
+</table>
+<a href="#/add" class="btn btn-primary">Criar</a>
