@@ -2,9 +2,12 @@
 
 namespace Ninja\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity
- * @Table(name="posts")
+ * 
+ * @ORM\Entity
+ * @ORM\Table(name="posts")
  **/
 class Post
 {
@@ -12,30 +15,30 @@ class Post
     /**
      * @var integer
      *
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $title;
 
     /**
      * @var string
      *
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $date;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $content;
 
