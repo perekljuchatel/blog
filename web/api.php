@@ -4,15 +4,15 @@ chdir(dirname(__DIR__));
 
 require 'vendor/autoload.php';
 
+use App\Entities\Post;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
-use Ninja\Entities\Post;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Vaneves\Doctrine\CollectionExtractor;
 use Vaneves\Provider\JsonRequestServiceProvider;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 $loader = require 'vendor/autoload.php';
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
@@ -27,21 +27,17 @@ $app->register(new DoctrineOrmServiceProvider, require_once 'app/config/db.orm.p
 $app->get('/posts', function () use ($app) {
 
     $em = $app['orm.em'];
-    $hydrator = new DoctrineHydrator($em);
-    $results = $em->getRepository('Ninja\Entities\Post')->findAll();
+    $results = $em->getRepository('App\Entities\Post')->findAll();
 
-    $data = [];
-    foreach ($results as $r) {
-        $data[] = $hydrator->extract($r);
-    }
+    $hydrator = new CollectionExtractor(new DoctrineHydrator($em));
 
-    return $app->json($data);
+    return $app->json($hydrator->extract($results));
 });
 $app->get('/posts/{id}', function ($id) use ($app) {
 
     $em = $app['orm.em'];
+    $post = $em->getRepository('App\Entities\Post')->find($id);
     $hydrator = new DoctrineHydrator($em);
-    $post = $em->getRepository('Ninja\Entities\Post')->find($id);
 
     return $app->json($hydrator->extract($post));
 });
@@ -56,12 +52,12 @@ $app->post('/posts', function (Request $request) use ($app) {
     $em->persist($post);
     $em->flush();
 
-    return $app->json($post);
+    return $app->json($hydrator->extract($post));
 });
 $app->put('/posts/{id}', function ($id, Request $request) use ($app) {
 
     $em = $app['orm.em'];
-    $post = $em->getRepository('Ninja\Entities\Post')->find($id);
+    $post = $em->getRepository('App\Entities\Post')->find($id);
 
     $post->setTitle($request->get('title'));
     $post->setContent($request->get('content'));
@@ -69,12 +65,12 @@ $app->put('/posts/{id}', function ($id, Request $request) use ($app) {
     $em->persist($post);
     $em->flush();
 
-    return $app->json($post);
+    return $app->json($hydrator->extract($post));
 });
 $app->delete('/posts/{id}', function ($id) use ($app) {
 
     $em = $app['orm.em'];
-    $post = $em->getRepository('Ninja\Entities\Post')->find($id);
+    $post = $em->getRepository('App\Entities\Post')->find($id);
 
     $em->remove($post);
     $em->flush();

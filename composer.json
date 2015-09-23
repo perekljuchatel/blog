@@ -4,11 +4,20 @@
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-module": "^0.9.0",
         "dflydev/doctrine-orm-service-provider": "1.0.6",
-        "vaneves/json-request-service-provider": "~1.0.0"
+        "vaneves/json-request-service-provider": "~1.0.0",
+        "vaneves/collection-extractor": "~0.0.1"
     },
     "autoload": {
         "psr-4": {
             "Ninja\\": "app/src/Ninja"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bower install"
+        ],
+        "post-update-cmd": [
+            "bower install"
+        ]
     }
 }
