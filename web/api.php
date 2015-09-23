@@ -37,13 +37,21 @@ $app->get('/posts', function () use ($app) {
 
     return $app->json($data);
 });
+$app->get('/posts/{id}', function ($id) use ($app) {
+
+    $em = $app['orm.em'];
+    $hydrator = new DoctrineHydrator($em);
+    $post = $em->getRepository('Ninja\Entities\Post')->find($id);
+
+    return $app->json($hydrator->extract($post));
+});
 $app->post('/posts', function (Request $request) use ($app) {
 
     $em = $app['orm.em'];
 
     $post = new Post();
     $post->setTitle($request->get('title'));
-    $post->setContent($request->get('title'));
+    $post->setContent($request->get('content'));
 
     $em->persist($post);
     $em->flush();
@@ -56,7 +64,7 @@ $app->put('/posts/{id}', function ($id, Request $request) use ($app) {
     $post = $em->getRepository('Ninja\Entities\Post')->find($id);
 
     $post->setTitle($request->get('title'));
-    $post->setContent($request->get('title'));
+    $post->setContent($request->get('content'));
 
     $em->persist($post);
     $em->flush();

@@ -1,0 +1,11 @@
+<div ng-if="post && post.id">
+    <h2 class="title">
+        <a href="#/detail/{{ post.id }}">{{ post.title }}</a>
+    </h2>
+    <p class="text-muted">Publicado em {{ post.date }}</p>
+    <p>{{ post.content }}</p>
+</div>
+<div ng-if="!post || !post.id">
+	<h2 class="title">Página Não Encontrada</h2>
+    <p>Publicação não encontrada. Ir para <a href="#/">página inicial</a>.</p>
+</div>
