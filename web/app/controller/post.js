@@ -2,14 +2,6 @@
 
 var controllers = angular.module('ninja.controllers', []);
 
-controllers.controller('BlogListCtrl', function ($scope, PostService, toastr) {
-    $scope.posts = PostService.query();
-});
-
-controllers.controller('BlogDetailCtrl', function ($scope, $routeParams, PostService) {
-   $scope.post = PostService.get({id: $routeParams.id});
-});
-
 controllers.controller('PostListCtrl', function ($scope, PostService, toastr) {
     $scope.posts = PostService.query();
 
@@ -51,4 +43,12 @@ controllers.controller('PostEditCtrl', function ($scope, $routeParams, $location
             toastr.error('Ocorreu um erro ao tentar salvar o post');
         });
     };
+});
+
+controllers.controller('BlogListCtrl', function ($scope, PostService) {
+    $scope.posts = PostService.query();
+});
+
+controllers.controller('BlogDetailCtrl', function ($scope, $routeParams, PostService) {
+   $scope.post = PostService.get({id: $routeParams.id});
 });
