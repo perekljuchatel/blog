@@ -5,8 +5,8 @@ return [
     'orm.em.options' => [
         'mappings' => [[
             'type' => 'annotation',
-            'namespace' => 'Ninja\Entities',
-            'path' => 'app/src/Ninja/Entities',
+            'namespace' => 'App\Entities',
+            'path' => 'app/src/App/Entities',
             'use_simple_annotation_reader' => false,
         ]],
     ],
